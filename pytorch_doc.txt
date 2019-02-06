@@ -1,0 +1,61 @@
+torch.linspace(start, end, steps=100, out=None, dtype=None, layout=torch.strided, device=None, requires_grad=False) → Tensor
+
+torch.linspace(start=3, end=10, steps=5)
+>> tensor([  3.0000,   4.7500,   6.5000,   8.2500,  10.0000])
+
+################################################################################
+repeat(*sizes) → Tensor
+
+x = torch.tensor([1, 2, 3])
+x.repeat(4, 2)
+>> tensor([[ 1,  2,  3,  1,  2,  3],
+          [ 1,  2,  3,  1,  2,  3],
+          [ 1,  2,  3,  1,  2,  3],
+          [ 1,  2,  3,  1,  2,  3]])
+
+x.repeat(4, 2, 1).size()
+>> torch.Size([4, 2, 3])
+
+################################################################################
+torch.unsqueeze(input, dim, out=None) → Tensor
+
+x = torch.tensor([1, 2, 3, 4])
+torch.unsqueeze(x, 0)
+tensor([[ 1,  2,  3,  4]])
+>>> torch.unsqueeze(x, 1)
+tensor([[ 1],
+        [ 2],
+        [ 3],
+        [ 4]])
+
+z = torch.Tensor([[1, 2, 3, 4], [5, 6, 7, 8]])
+y = torch.unsqueeze(z, 1)
+print(y)
+ >> tensor([[[1., 2., 3., 4.]],
+           [[5., 6., 7., 8.]]])
+
+y = torch.unsqueeze(z, 2)
+print(z)
+>> tensor([[1., 2., 3., 4.],
+          [5., 6., 7., 8.]])
+
+y = torch.unsqueeze(z, 3)
+>> Traceback (most recent call last):
+     File "<stdin>", line 1, in <module>
+   RuntimeError: Dimension out of range (expected to be in range of [-3, 2], but got 3)
+
+y = torch.unsqueeze(z, 0)
+print(y)
+>> tensor([[[1., 2., 3., 4.],
+          [5., 6., 7., 8.]]])
+
+################################################################################
+F.grid_sample(label, grid) 怪しいdownsample
+
+label = torch.randn([batch_size, 20, 1024, 2048], dtype = torch.float)
+print('Label size {}'.format(label.size()))
+>> Label size torch.Size([1, 20, 1024, 2048])
+
+label_downsampled = F.grid_sample(label, grid) # downsample
+print('Label size {}'.format(label_downsampled.size()))
+>> Label size torch.Size([1, 20, 4, 8])
